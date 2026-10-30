@@ -267,8 +267,10 @@ function Precio({ precio, descuento, grande }) {
 function TarjetaProducto({ p, onVer }) {
   return (
     <article className="card group flex flex-col overflow-hidden transition hover:-translate-y-1 hover:shadow-xl hover:shadow-azul-600/10">
-      <button onClick={() => onVer(p.id)} className="relative aspect-[16/10] bg-plata-100 p-3 sm:aspect-[4/3] sm:p-4">
-        <FotoProducto src={p.imagen} alt={p.nombre} tipo={p.tipo} className="rounded-xl transition group-hover:scale-105" />
+      <button onClick={() => onVer(p.id)} className="relative aspect-[16/10] overflow-hidden bg-plata-100 sm:aspect-[4/3]">
+        <div className="absolute inset-3 sm:inset-4">
+          <FotoProducto src={p.imagen} alt={p.nombre} tipo={p.tipo} className="rounded-xl transition group-hover:scale-105" />
+        </div>
         <span className="absolute left-3 top-3 rounded-full bg-marino-900 px-3 py-1 text-xs font-semibold text-white">{p.categoria}</span>
         {p.descuento > 0 && (
           <span className="absolute right-3 top-3 rounded-full bg-cian-400 px-3 py-1 text-xs font-bold text-marino-950">-{p.descuento}%</span>
@@ -355,7 +357,7 @@ function SeccionAccesorios({ onVer }) {
         <div className="mt-10 grid grid-cols-2 gap-4 sm:grid-cols-3 lg:grid-cols-5">
           {data?.map((p) => (
             <button key={p.id} onClick={() => onVer(p.id)} className="card group overflow-hidden text-left transition hover:-translate-y-0.5 hover:ring-azul-500">
-              <div className="aspect-square bg-plata-100 p-3"><FotoProducto src={p.imagen} alt={p.nombre} tipo="accesorio" className="rounded-lg" /></div>
+              <div className="aspect-square overflow-hidden bg-plata-100 p-3"><FotoProducto src={p.imagen} alt={p.nombre} tipo="accesorio" className="rounded-lg" /></div>
               <div className="p-4">
                 <p className="text-sm font-bold leading-snug text-marino-900">{p.nombre}</p>
                 <p className="mt-1 font-display text-lg font-extrabold text-azul-700">{bs(conDescuento(p.precio, p.descuento))}</p>

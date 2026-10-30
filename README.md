@@ -99,3 +99,16 @@ internet → nginx del VPS (HTTPS) → 127.0.0.1:3120 → contenedor web (React)
 
 **Uso diario:** `git push` → en el VPS `bash deploy.sh`.
 **Volver a una versión anterior:** `TAG=<sha del commit> docker compose up -d`.
+
+### Copiar las fotos de tu PC al servidor
+
+Las fotos no van en git ni en las imágenes Docker. Para pasar las que cargaste en local
+(con XAMPP encendido), desde la carpeta `backend`:
+
+```
+npm run subir-fotos -- https://camarasjm.rusoft.dev --probar   ← solo muestra qué haría
+npm run subir-fotos -- https://camarasjm.rusoft.dev            ← las sube
+```
+
+Pide el usuario y la contraseña del panel del servidor. Empareja productos por **modelo** y kits
+por **nombre**, y se salta los que ya tienen foto (con `--forzar` los sube igual).

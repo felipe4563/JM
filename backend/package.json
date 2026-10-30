@@ -4,7 +4,8 @@
   "type": "module",
   "scripts": {
     "dev": "node --watch src/server.js",
-    "start": "node src/server.js"
+    "start": "node src/server.js",
+    "subir-fotos": "node scripts/subir-fotos.mjs"
   },
   "dependencies": {
     "bcryptjs": "^3.0.3",
