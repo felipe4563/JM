@@ -1,0 +1,11 @@
+node_modules
+npm-debug.log
+.git
+# Secretos y datos del cliente: nunca dentro de la imagen
+# (las imágenes en ghcr.io pueden quedar públicas).
+.env
+.env.*
+uploads
+*.sql
+*.bak
+*.zip

@@ -1,0 +1,47 @@
+@import "tailwindcss";
+
+/* Paleta JM — extraída del logotipo */
+@theme {
+  --color-marino-950: #040E24;
+  --color-marino-900: #071A3D;   /* azul marino del escudo y la banda */
+  --color-marino-800: #0C2657;
+  --color-marino-700: #133578;
+  --color-azul-700: #0B4FC2;
+  --color-azul-600: #1366E8;     /* azul principal de las letras JM */
+  --color-azul-500: #2B86FF;
+  --color-azul-100: #DCEBFF;
+  --color-azul-50:  #EEF5FF;
+  --color-cian-400: #22C3FF;     /* brillo eléctrico del lente y el aro */
+  --color-plata-300: #C5CDD8;    /* plateado de las letras y la cámara */
+  --color-plata-100: #EDF1F6;
+  --color-fondo: #F4F7FB;
+  --color-tinta: #0B1220;
+
+  --font-display: "Montserrat", ui-sans-serif, system-ui, sans-serif;
+  --font-sans: "Inter", ui-sans-serif, system-ui, sans-serif;
+}
+
+html { scroll-behavior: smooth; }
+body { @apply bg-fondo text-tinta font-sans antialiased; }
+h1, h2, h3, h4 { @apply font-display; }
+
+@utility btn { @apply inline-flex items-center justify-center gap-2 rounded-xl px-4 py-2.5 text-sm font-semibold transition disabled:opacity-50 cursor-pointer; }
+@utility btn-primary { @apply btn bg-azul-600 text-white hover:bg-azul-700 shadow-sm shadow-azul-600/30; }
+@utility btn-ghost { @apply btn bg-white text-marino-900 ring-1 ring-plata-300 hover:bg-plata-100; }
+@utility btn-danger { @apply btn bg-red-50 text-red-700 hover:bg-red-100; }
+@utility btn-wa { @apply btn bg-[#25D366] text-white hover:bg-[#1EBE5A]; }
+@utility input { @apply w-full rounded-xl border border-plata-300 bg-white px-3.5 py-2.5 text-sm outline-none transition focus:border-azul-500 focus:ring-4 focus:ring-azul-100; }
+@utility label { @apply mb-1.5 block text-xs font-semibold uppercase tracking-wide text-marino-700; }
+@utility card { @apply rounded-2xl bg-white ring-1 ring-plata-300/60 shadow-sm; }
+@utility section-title { @apply font-display text-3xl font-extrabold tracking-tight text-marino-900 sm:text-4xl; }
+@utility eyebrow { @apply text-xs font-bold uppercase tracking-[0.2em] text-azul-600; }
+
+.glow-ring {
+  background: radial-gradient(circle at 50% 50%, rgba(34,195,255,.35), rgba(19,102,232,.15) 40%, transparent 70%);
+}
+.grid-bg {
+  background-image:
+    linear-gradient(rgba(255,255,255,.05) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(255,255,255,.05) 1px, transparent 1px);
+  background-size: 48px 48px;
+}

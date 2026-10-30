@@ -1,0 +1,66 @@
+# JM Seguridad y Tecnología — producción (camarasjm.rusoft.dev)
+#
+# Las variables (contraseñas, JWT) se leen del archivo .env junto a este
+# archivo. Copia .env.example a .env en el VPS y completa los valores.
+
+services:
+  mysql:
+    image: mysql:8.0
+    restart: unless-stopped
+    command: --character-set-server=utf8mb4 --collation-server=utf8mb4_unicode_ci
+    environment:
+      MYSQL_DATABASE: jm_seguridad
+      MYSQL_USER: jm
+      MYSQL_PASSWORD: ${DB_PASSWORD:?Falta DB_PASSWORD en .env}
+      MYSQL_ROOT_PASSWORD: ${DB_ROOT_PASSWORD:?Falta DB_ROOT_PASSWORD en .env}
+    volumes:
+      - mysql_data:/var/lib/mysql
+      # Solo se ejecuta la PRIMERA vez (cuando el volumen mysql_data está vacío):
+      # crea las tablas y carga los datos de ejemplo.
+      - ./database/jm_seguridad.sql:/docker-entrypoint-initdb.d/01-jm_seguridad.sql:ro
+    healthcheck:
+      test: ["CMD-SHELL", "mysqladmin ping -h 127.0.0.1 -u root -p$$MYSQL_ROOT_PASSWORD --silent"]
+      interval: 10s
+      timeout: 5s
+      retries: 12
+      start_period: 30s
+    # Sin "ports": solo los contenedores de este proyecto llegan a MySQL.
+    # Para entrar desde el VPS:
+    #   docker compose exec mysql mysql -u jm -p jm_seguridad
+
+  # Las imágenes las construye GitHub Actions (.github/workflows/imagenes.yml)
+  # y deploy.sh exporta TAG con el SHA del commit actual. Sin TAG se usa
+  # "latest". "build:" queda para construir a mano si hiciera falta:
+  #   docker compose build api
+  api:
+    image: ghcr.io/felipe4563/camarasjm-api:${TAG:-latest}
+    build: ./backend
+    restart: unless-stopped
+    environment:
+      PORT: 4000
+      DB_HOST: mysql
+      DB_USER: jm
+      DB_PASSWORD: ${DB_PASSWORD}
+      DB_NAME: jm_seguridad
+      JWT_SECRET: ${JWT_SECRET:?Falta JWT_SECRET en .env}
+    depends_on:
+      mysql:
+        condition: service_healthy
+    volumes:
+      - uploads_data:/app/uploads
+    # Sin "ports": el contenedor web le reenvía /api y /uploads.
+
+  web:
+    image: ghcr.io/felipe4563/camarasjm-web:${TAG:-latest}
+    build: ./frontend
+    restart: unless-stopped
+    depends_on:
+      - api
+    ports:
+      # El nginx del sistema (fuera de Docker) reenvía aquí. Atado a
+      # 127.0.0.1: desde internet no se puede llegar directo a este puerto.
+      - "127.0.0.1:${WEB_PORT:-3110}:80"
+
+volumes:
+  mysql_data:
+  uploads_data:
