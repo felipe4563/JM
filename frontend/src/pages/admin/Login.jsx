@@ -2,7 +2,7 @@ import { useState } from 'react';
 import { Link, Navigate, useNavigate } from 'react-router-dom';
 import { LogIn, ArrowLeft } from 'lucide-react';
 import { api, getToken, guardarSesion } from '../../api';
-import { Alerta } from '../../components/ui';
+import { Alerta, InputPassword } from '../../components/ui';
 
 export default function Login() {
   const navigate = useNavigate();
@@ -42,7 +42,7 @@ export default function Login() {
           </label>
           <label className="block">
             <span className="label">Contraseña</span>
-            <input className="input" type="password" required value={form.password} onChange={(e) => setForm({ ...form, password: e.target.value })} />
+            <InputPassword required autoComplete="current-password" value={form.password} onChange={(e) => setForm({ ...form, password: e.target.value })} />
           </label>
           <button className="btn-primary w-full py-3" disabled={cargando}>
             <LogIn size={18} /> {cargando ? 'Ingresando…' : 'Iniciar sesión'}

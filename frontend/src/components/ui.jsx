@@ -1,6 +1,6 @@
 import { useCallback, useEffect, useState } from 'react';
 import {
-  Cctv, Smartphone, Wrench, ShieldCheck, Monitor, Headset, Cable, Wifi, Camera, Router, HardDrive, X,
+  Cctv, Smartphone, Wrench, ShieldCheck, Monitor, Headset, Cable, Wifi, Camera, Router, HardDrive, X, Eye, EyeOff,
 } from 'lucide-react';
 import { api } from '../api';
 
@@ -67,6 +67,21 @@ export function Campo({ label, children, className = '' }) {
       <span className="label">{label}</span>
       {children}
     </label>
+  );
+}
+
+// Campo de contraseña con botón de ojo para mostrar/ocultar
+export function InputPassword({ className = '', ...props }) {
+  const [ver, setVer] = useState(false);
+  return (
+    <div className="relative">
+      <input {...props} type={ver ? 'text' : 'password'} className={`input pr-11 ${className}`} />
+      <button type="button" onClick={(e) => { e.preventDefault(); setVer(!ver); }}
+        className="absolute inset-y-0 right-0 flex w-11 items-center justify-center text-marino-700/50 hover:text-azul-600"
+        aria-label={ver ? 'Ocultar contraseña' : 'Mostrar contraseña'} title={ver ? 'Ocultar contraseña' : 'Mostrar contraseña'}>
+        {ver ? <EyeOff size={18} /> : <Eye size={18} />}
+      </button>
+    </div>
   );
 }
 

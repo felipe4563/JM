@@ -1,7 +1,7 @@
 import { useState } from 'react';
 import { Plus, Pencil, Trash2, Power } from 'lucide-react';
 import { api } from '../api';
-import { useApi, Modal, Campo, Alerta } from './ui';
+import { useApi, Modal, Campo, Alerta, InputPassword } from './ui';
 import { Encabezado, Tabla, BotonAccion } from '../pages/admin/AdminLayout';
 
 /**
@@ -90,6 +90,9 @@ export default function CrudSimple({ titulo, descripcion, ruta, campos, columnas
                     <select className="input" value={form[c.name] ?? ''} required={c.required} onChange={(e) => set(c.name, e.target.value)}>
                       {c.options.map(([v, t]) => <option key={v} value={v}>{t}</option>)}
                     </select>
+                  ) : c.type === 'password' ? (
+                    <InputPassword value={form[c.name] ?? ''} required={c.required && !form.id} placeholder={c.placeholder}
+                      autoComplete="new-password" onChange={(e) => set(c.name, e.target.value)} />
                   ) : (
                     <input className="input" type={c.type || 'text'} step={c.type === 'number' ? '0.01' : undefined} value={form[c.name] ?? ''}
                       required={c.required && !(c.type === 'password' && form.id)} placeholder={c.placeholder}
