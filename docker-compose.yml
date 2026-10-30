@@ -59,7 +59,7 @@ services:
     ports:
       # El nginx del sistema (fuera de Docker) reenvía aquí. Atado a
       # 127.0.0.1: desde internet no se puede llegar directo a este puerto.
-      - "127.0.0.1:${WEB_PORT:-3110}:80"
+      - "127.0.0.1:${WEB_PORT:-3120}:80"
 
 volumes:
   mysql_data:

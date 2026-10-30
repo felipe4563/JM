@@ -88,7 +88,7 @@ y el VPS solo las descarga (no gasta RAM ni CPU en builds).
 | `.env.example` | Contraseñas de MySQL, `JWT_SECRET` y puerto (copiar a `.env` en el VPS) |
 
 ```
-internet → nginx del VPS (HTTPS) → 127.0.0.1:3110 → contenedor web (React)
+internet → nginx del VPS (HTTPS) → 127.0.0.1:3120 → contenedor web (React)
                                                       ├─ /api      → contenedor api → mysql
                                                       └─ /uploads  → contenedor api (volumen uploads_data)
 ```
